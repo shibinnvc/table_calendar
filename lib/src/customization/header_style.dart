@@ -28,8 +28,11 @@ class HeaderStyle {
   /// ```
   final TextFormatter? titleTextFormatter;
 
-  /// Style for title Text (month-year) displayed in header.
-  final TextStyle titleTextStyle;
+  /// Style for title Text month displayed in header.
+  final TextStyle monthTextStyle;
+
+  /// Style for title Text year displayed in header.
+  final TextStyle yearTextStyle;
 
   /// Style for FormatButton `Text`.
   final TextStyle formatButtonTextStyle;
@@ -93,7 +96,8 @@ class HeaderStyle {
     this.formatButtonVisible = true,
     this.formatButtonShowsNext = true,
     this.titleTextFormatter,
-    this.titleTextStyle = const TextStyle(fontSize: 17.0),
+    this.monthTextStyle = const TextStyle(fontSize: 17.0),
+    this.yearTextStyle = const TextStyle(fontSize: 17.0),
     this.formatButtonTextStyle = const TextStyle(fontSize: 14.0),
     this.formatButtonDecoration = const BoxDecoration(
       border: const Border.fromBorderSide(BorderSide()),

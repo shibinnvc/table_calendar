@@ -21,26 +21,30 @@ class CalendarHeader extends StatelessWidget {
   final ValueChanged<CalendarFormat> onFormatButtonTap;
   final Map<CalendarFormat, String> availableCalendarFormats;
   final DayBuilder? headerTitleBuilder;
+  final bool isSeperateHeaderTitle;
 
-  const CalendarHeader({
-    Key? key,
-    this.locale,
-    required this.focusedMonth,
-    required this.calendarFormat,
-    required this.headerStyle,
-    required this.onLeftChevronTap,
-    required this.onRightChevronTap,
-    required this.onHeaderTap,
-    required this.onHeaderLongPress,
-    required this.onFormatButtonTap,
-    required this.availableCalendarFormats,
-    this.headerTitleBuilder,
-  }) : super(key: key);
+  const CalendarHeader(
+      {Key? key,
+      this.locale,
+      required this.focusedMonth,
+      required this.calendarFormat,
+      required this.headerStyle,
+      required this.onLeftChevronTap,
+      required this.onRightChevronTap,
+      required this.onHeaderTap,
+      required this.onHeaderLongPress,
+      required this.onFormatButtonTap,
+      required this.availableCalendarFormats,
+      this.headerTitleBuilder,
+      this.isSeperateHeaderTitle = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final text = headerStyle.titleTextFormatter?.call(focusedMonth, locale) ??
-        DateFormat.yMMMM(locale).format(focusedMonth);
+    final month = headerStyle.titleTextFormatter?.call(focusedMonth, locale) ??
+        DateFormat.MMMM(locale).format(focusedMonth);
+    final year = headerStyle.titleTextFormatter?.call(focusedMonth, locale) ??
+        DateFormat.y(locale).format(focusedMonth);
 
     return Container(
       decoration: headerStyle.decoration,
@@ -60,29 +64,49 @@ class CalendarHeader extends StatelessWidget {
             Expanded(
               child: headerTitleBuilder?.call(context, focusedMonth) ??
                   GestureDetector(
-                    onTap: onHeaderTap,
-                    onLongPress: onHeaderLongPress,
-                    child: Text(
-                      text,
-                      style: headerStyle.titleTextStyle,
-                      textAlign: headerStyle.titleCentered
-                          ? TextAlign.center
-                          : TextAlign.start,
-                    ),
-                  ),
+                      onTap: onHeaderTap,
+                      onLongPress: onHeaderLongPress,
+                      child: RichText(
+                          textAlign: headerStyle.titleCentered
+                              ? TextAlign.center
+                              : TextAlign.start,
+                          text: TextSpan(children: [
+                            TextSpan(
+                              text: '$month ',
+                              style: headerStyle.monthTextStyle,
+                            ),
+                            TextSpan(
+                              text: year,
+                              style: headerStyle.yearTextStyle,
+                            ),
+                          ]))
+                      // Text(
+                      //   text,
+                      //   style: headerStyle.titleTextStyle,
+                      // textAlign: headerStyle.titleCentered
+                      //     ? TextAlign.center
+                      //     : TextAlign.start,
+                      // ),
+                      ),
             ),
           if (!headerStyle.isTitleExpanded)
             GestureDetector(
-              onTap: onHeaderTap,
-              onLongPress: onHeaderLongPress,
-              child: Text(
-                text,
-                style: headerStyle.titleTextStyle,
-                textAlign: headerStyle.titleCentered
-                    ? TextAlign.center
-                    : TextAlign.start,
-              ),
-            ),
+                onTap: onHeaderTap,
+                onLongPress: onHeaderLongPress,
+                child: RichText(
+                    textAlign: headerStyle.titleCentered
+                        ? TextAlign.center
+                        : TextAlign.start,
+                    text: TextSpan(children: [
+                      TextSpan(
+                        text: '$month ',
+                        style: headerStyle.monthTextStyle,
+                      ),
+                      TextSpan(
+                        text: year,
+                        style: headerStyle.yearTextStyle,
+                      ),
+                    ]))),
           if (headerStyle.formatButtonVisible &&
               availableCalendarFormats.length > 1)
             Padding(
