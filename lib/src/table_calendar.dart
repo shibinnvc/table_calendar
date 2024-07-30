@@ -447,7 +447,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
       children: [
         if (widget.headerVisible)
           ValueListenableBuilder<DateTime>(
