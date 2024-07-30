@@ -76,6 +76,9 @@ class HeaderStyle {
   /// Align title to left and chevrons to right position.
   final bool titleLeft;
 
+  /// Align title to left and chevrons to right position.
+  final bool isTitleExpanded;
+
   /// Determines right chevron's visibility.
   final bool rightChevronVisible;
 
@@ -84,6 +87,7 @@ class HeaderStyle {
 
   /// Creates a `HeaderStyle` used by `TableCalendar` widget.
   const HeaderStyle({
+    this.isTitleExpanded = false,
     this.titleLeft = false,
     this.titleCentered = false,
     this.formatButtonVisible = true,
