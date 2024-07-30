@@ -21,23 +21,21 @@ class CalendarHeader extends StatelessWidget {
   final ValueChanged<CalendarFormat> onFormatButtonTap;
   final Map<CalendarFormat, String> availableCalendarFormats;
   final DayBuilder? headerTitleBuilder;
-  final bool isSeperateHeaderTitle;
 
-  const CalendarHeader(
-      {Key? key,
-      this.locale,
-      required this.focusedMonth,
-      required this.calendarFormat,
-      required this.headerStyle,
-      required this.onLeftChevronTap,
-      required this.onRightChevronTap,
-      required this.onHeaderTap,
-      required this.onHeaderLongPress,
-      required this.onFormatButtonTap,
-      required this.availableCalendarFormats,
-      this.headerTitleBuilder,
-      this.isSeperateHeaderTitle = false})
-      : super(key: key);
+  const CalendarHeader({
+    Key? key,
+    this.locale,
+    required this.focusedMonth,
+    required this.calendarFormat,
+    required this.headerStyle,
+    required this.onLeftChevronTap,
+    required this.onRightChevronTap,
+    required this.onHeaderTap,
+    required this.onHeaderLongPress,
+    required this.onFormatButtonTap,
+    required this.availableCalendarFormats,
+    this.headerTitleBuilder,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
