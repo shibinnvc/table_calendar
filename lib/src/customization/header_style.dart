@@ -26,7 +26,17 @@ class HeaderStyle {
   /// ```dart
   /// titleTextFormatter: (date, locale) => DateFormat.yM(locale).format(date),
   /// ```
-  final TextFormatter? titleTextFormatter;
+  final TextFormatter? monthTextFormatter;
+
+  /// Use to customize header's title text (e.g. with different `DateFormat`).
+  /// You can use `String` transformations to further customize the text.
+  /// Defaults to simple `'yMMMM'` format (i.e. January 2019, February 2019, March 2019, etc.).
+  ///
+  /// Example usage:
+  /// ```dart
+  /// titleTextFormatter: (date, locale) => DateFormat.yM(locale).format(date),
+  /// ```
+  final TextFormatter? yearTextFormatter;
 
   /// Style for title Text month displayed in header.
   final TextStyle monthTextStyle;
@@ -90,12 +100,13 @@ class HeaderStyle {
 
   /// Creates a `HeaderStyle` used by `TableCalendar` widget.
   const HeaderStyle({
+    this.monthTextFormatter,
+    this.yearTextFormatter,
     this.isTitleExpanded = false,
     this.titleLeft = false,
     this.titleCentered = false,
     this.formatButtonVisible = true,
     this.formatButtonShowsNext = true,
-    this.titleTextFormatter,
     this.monthTextStyle = const TextStyle(fontSize: 17.0),
     this.yearTextStyle = const TextStyle(fontSize: 17.0),
     this.formatButtonTextStyle = const TextStyle(fontSize: 14.0),
