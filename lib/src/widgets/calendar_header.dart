@@ -21,7 +21,6 @@ class CalendarHeader extends StatelessWidget {
   final ValueChanged<CalendarFormat> onFormatButtonTap;
   final Map<CalendarFormat, String> availableCalendarFormats;
   final DayBuilder? headerTitleBuilder;
-  final Widget? customHeader;
 
   const CalendarHeader({
     Key? key,
@@ -36,7 +35,6 @@ class CalendarHeader extends StatelessWidget {
     required this.onFormatButtonTap,
     required this.availableCalendarFormats,
     this.headerTitleBuilder,
-    this.customHeader,
   }) : super(key: key);
 
   @override
@@ -53,91 +51,88 @@ class CalendarHeader extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.max,
         children: [
-          if (customHeader == null) ...[
-            if (!headerStyle.titleLeft && headerStyle.leftChevronVisible)
-              CustomIconButton(
-                icon: headerStyle.leftChevronIcon,
-                onTap: onLeftChevronTap,
-                margin: headerStyle.leftChevronMargin,
-                padding: headerStyle.leftChevronPadding,
+          if (!headerStyle.titleLeft && headerStyle.leftChevronVisible)
+            CustomIconButton(
+              icon: headerStyle.leftChevronIcon,
+              onTap: onLeftChevronTap,
+              margin: headerStyle.leftChevronMargin,
+              padding: headerStyle.leftChevronPadding,
+            ),
+          if (headerStyle.isTitleExpanded)
+            Expanded(
+              child: headerTitleBuilder?.call(context, focusedMonth) ??
+                  GestureDetector(
+                      onTap: onHeaderTap,
+                      onLongPress: onHeaderLongPress,
+                      child: RichText(
+                          textAlign: headerStyle.titleCentered
+                              ? TextAlign.center
+                              : TextAlign.start,
+                          text: TextSpan(children: [
+                            TextSpan(
+                              text: '$month ',
+                              style: headerStyle.monthTextStyle,
+                            ),
+                            TextSpan(
+                              text: year,
+                              style: headerStyle.yearTextStyle,
+                            ),
+                          ]))
+                      // Text(
+                      //   text,
+                      //   style: headerStyle.titleTextStyle,
+                      // textAlign: headerStyle.titleCentered
+                      //     ? TextAlign.center
+                      //     : TextAlign.start,
+                      // ),
+                      ),
+            ),
+          if (!headerStyle.isTitleExpanded)
+            GestureDetector(
+                onTap: onHeaderTap,
+                onLongPress: onHeaderLongPress,
+                child: RichText(
+                    textAlign: headerStyle.titleCentered
+                        ? TextAlign.center
+                        : TextAlign.start,
+                    text: TextSpan(children: [
+                      TextSpan(
+                        text: '$month ',
+                        style: headerStyle.monthTextStyle,
+                      ),
+                      TextSpan(
+                        text: year,
+                        style: headerStyle.yearTextStyle,
+                      ),
+                    ]))),
+          if (headerStyle.formatButtonVisible &&
+              availableCalendarFormats.length > 1)
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: FormatButton(
+                onTap: onFormatButtonTap,
+                availableCalendarFormats: availableCalendarFormats,
+                calendarFormat: calendarFormat,
+                decoration: headerStyle.formatButtonDecoration,
+                padding: headerStyle.formatButtonPadding,
+                textStyle: headerStyle.formatButtonTextStyle,
+                showsNextFormat: headerStyle.formatButtonShowsNext,
               ),
-            if (headerStyle.isTitleExpanded)
-              Expanded(
-                child: headerTitleBuilder?.call(context, focusedMonth) ??
-                    GestureDetector(
-                        onTap: onHeaderTap,
-                        onLongPress: onHeaderLongPress,
-                        child: RichText(
-                            textAlign: headerStyle.titleCentered
-                                ? TextAlign.center
-                                : TextAlign.start,
-                            text: TextSpan(children: [
-                              TextSpan(
-                                text: '$month ',
-                                style: headerStyle.monthTextStyle,
-                              ),
-                              TextSpan(
-                                text: year,
-                                style: headerStyle.yearTextStyle,
-                              ),
-                            ]))
-                        // Text(
-                        //   text,
-                        //   style: headerStyle.titleTextStyle,
-                        // textAlign: headerStyle.titleCentered
-                        //     ? TextAlign.center
-                        //     : TextAlign.start,
-                        // ),
-                        ),
-              ),
-            if (!headerStyle.isTitleExpanded)
-              GestureDetector(
-                  onTap: onHeaderTap,
-                  onLongPress: onHeaderLongPress,
-                  child: RichText(
-                      textAlign: headerStyle.titleCentered
-                          ? TextAlign.center
-                          : TextAlign.start,
-                      text: TextSpan(children: [
-                        TextSpan(
-                          text: '$month ',
-                          style: headerStyle.monthTextStyle,
-                        ),
-                        TextSpan(
-                          text: year,
-                          style: headerStyle.yearTextStyle,
-                        ),
-                      ]))),
-            if (headerStyle.formatButtonVisible &&
-                availableCalendarFormats.length > 1)
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: FormatButton(
-                  onTap: onFormatButtonTap,
-                  availableCalendarFormats: availableCalendarFormats,
-                  calendarFormat: calendarFormat,
-                  decoration: headerStyle.formatButtonDecoration,
-                  padding: headerStyle.formatButtonPadding,
-                  textStyle: headerStyle.formatButtonTextStyle,
-                  showsNextFormat: headerStyle.formatButtonShowsNext,
-                ),
-              ),
-            if (headerStyle.titleLeft && headerStyle.leftChevronVisible)
-              CustomIconButton(
-                icon: headerStyle.leftChevronIcon,
-                onTap: onLeftChevronTap,
-                margin: headerStyle.leftChevronMargin,
-                padding: headerStyle.leftChevronPadding,
-              ),
-            if (headerStyle.rightChevronVisible)
-              CustomIconButton(
-                icon: headerStyle.rightChevronIcon,
-                onTap: onRightChevronTap,
-                margin: headerStyle.rightChevronMargin,
-                padding: headerStyle.rightChevronPadding,
-              ),
-          ] else
-            customHeader!
+            ),
+          if (headerStyle.titleLeft && headerStyle.leftChevronVisible)
+            CustomIconButton(
+              icon: headerStyle.leftChevronIcon,
+              onTap: onLeftChevronTap,
+              margin: headerStyle.leftChevronMargin,
+              padding: headerStyle.leftChevronPadding,
+            ),
+          if (headerStyle.rightChevronVisible)
+            CustomIconButton(
+              icon: headerStyle.rightChevronIcon,
+              onTap: onRightChevronTap,
+              margin: headerStyle.rightChevronMargin,
+              padding: headerStyle.rightChevronPadding,
+            ),
         ],
       ),
     );
