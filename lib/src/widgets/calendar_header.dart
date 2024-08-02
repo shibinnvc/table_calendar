@@ -59,7 +59,7 @@ class CalendarHeader extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           if (!headerStyle.titleLeft && headerStyle.leftChevronVisible)
-            leftChevronButton(),
+            leftChevronButton(onTap: onLeftChevronTap),
           if (headerStyle.isTitleExpanded)
             Expanded(
               child: headerTitleBuilder?.call(context, focusedMonth) ??
@@ -125,12 +125,13 @@ class CalendarHeader extends StatelessWidget {
               ),
             ),
           if (headerStyle.titleLeft && headerStyle.leftChevronVisible)
-            leftChevronButton(),
-          if (headerStyle.rightChevronVisible) rightChevronButton(),
+            leftChevronButton(onTap: onLeftChevronTap),
+          if (headerStyle.rightChevronVisible)
+            rightChevronButton(onTap: onRightChevronTap),
           if (calendarHeaderView ==
               CalendarHeaderView.seperateMonthYearView) ...[
             Spacer(),
-            leftChevronButton(),
+            leftChevronButton(onTap: onLeftChevronYearTap),
             Text(
               year,
               textAlign: headerStyle.titleCentered
@@ -138,14 +139,14 @@ class CalendarHeader extends StatelessWidget {
                   : TextAlign.start,
               style: headerStyle.yearTextStyle,
             ),
-            rightChevronButton(),
+            rightChevronButton(onTap: onRightChevronYearTap),
           ]
         ],
       ),
     );
   }
 
-  CustomIconButton leftChevronButton() {
+  CustomIconButton leftChevronButton({required VoidCallback onTap}) {
     return CustomIconButton(
       icon: headerStyle.leftChevronIcon,
       onTap: calendarHeaderView == CalendarHeaderView.singleView
@@ -156,12 +157,10 @@ class CalendarHeader extends StatelessWidget {
     );
   }
 
-  CustomIconButton rightChevronButton() {
+  CustomIconButton rightChevronButton({required VoidCallback onTap}) {
     return CustomIconButton(
       icon: headerStyle.rightChevronIcon,
-      onTap: calendarHeaderView == CalendarHeaderView.singleView
-          ? onRightChevronTap
-          : onRightChevronYearTap,
+      onTap: onTap,
       margin: headerStyle.rightChevronMargin,
       padding: headerStyle.rightChevronPadding,
     );

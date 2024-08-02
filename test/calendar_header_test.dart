@@ -18,6 +18,8 @@ Widget setupTestWidget({
   HeaderStyle headerStyle = const HeaderStyle(),
   VoidCallback? onLeftChevronTap,
   VoidCallback? onRightChevronTap,
+  VoidCallback? onLeftChevronYearTap,
+  VoidCallback? onRightChevronYearTap,
   VoidCallback? onHeaderTap,
   VoidCallback? onHeaderLongPress,
   Function(CalendarFormat)? onFormatButtonTap,
@@ -36,6 +38,9 @@ Widget setupTestWidget({
         onHeaderLongPress: () => onHeaderLongPress?.call(),
         onFormatButtonTap: (format) => onFormatButtonTap?.call(format),
         availableCalendarFormats: availableCalendarFormats,
+        calendarHeaderView: CalendarHeaderView.singleView,
+        onLeftChevronYearTap: () => onLeftChevronYearTap?.call(),
+        onRightChevronYearTap: () => onRightChevronYearTap?.call(),
       ),
     ),
   );
