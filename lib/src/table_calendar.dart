@@ -110,7 +110,7 @@ class TableCalendar<T> extends StatefulWidget {
   final double rowHeight;
 
   /// Used for setting the height of `TableCalendar`'s days of week row.
-  // final double daysOfWeekHeight;
+  final double daysOfWeekHeight;
 
   /// Specifies the duration of size animation that takes place whenever `calendarFormat` is changed.
   final Duration formatAnimationDuration;
@@ -232,7 +232,7 @@ class TableCalendar<T> extends StatefulWidget {
     this.shouldFillViewport = false,
     this.weekNumbersVisible = false,
     this.rowHeight = 52.0,
-    // this.daysOfWeekHeight = 16.0,
+    this.daysOfWeekHeight = 16.0,
     this.formatAnimationDuration = const Duration(milliseconds: 200),
     this.formatAnimationCurve = Curves.linear,
     this.pageAnimationDuration = const Duration(milliseconds: 300),
@@ -499,7 +499,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
             tableBorder: widget.calendarStyle.tableBorder,
             tablePadding: widget.calendarStyle.tablePadding,
             dowVisible: widget.daysOfWeekVisible,
-            dowHeight: 16,
+            dowHeight: widget.daysOfWeekHeight,
             rowHeight: widget.rowHeight,
             formatAnimationDuration: widget.formatAnimationDuration,
             formatAnimationCurve: widget.formatAnimationCurve,
