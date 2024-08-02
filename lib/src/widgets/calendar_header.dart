@@ -38,7 +38,7 @@ class CalendarHeader extends StatelessWidget {
     required this.onFormatButtonTap,
     required this.availableCalendarFormats,
     this.headerTitleBuilder,
-    this.calendarHeaderView = CalendarHeaderView.singleView,
+    required this.calendarHeaderView,
   }) : super(key: key);
 
   @override
