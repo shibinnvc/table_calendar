@@ -17,6 +17,8 @@ class CalendarHeader extends StatelessWidget {
   final HeaderStyle headerStyle;
   final VoidCallback onLeftChevronTap;
   final VoidCallback onRightChevronTap;
+  final VoidCallback onLeftChevronYearTap;
+  final VoidCallback onRightChevronYearTap;
   final VoidCallback onHeaderTap;
   final VoidCallback onHeaderLongPress;
   final ValueChanged<CalendarFormat> onFormatButtonTap;
@@ -38,6 +40,8 @@ class CalendarHeader extends StatelessWidget {
     required this.availableCalendarFormats,
     this.headerTitleBuilder,
     required this.calendarHeaderView,
+    required this.onLeftChevronYearTap,
+    required this.onRightChevronYearTap,
   }) : super(key: key);
 
   @override
@@ -144,7 +148,9 @@ class CalendarHeader extends StatelessWidget {
   CustomIconButton leftChevronButton() {
     return CustomIconButton(
       icon: headerStyle.leftChevronIcon,
-      onTap: onLeftChevronTap,
+      onTap: calendarHeaderView == CalendarHeaderView.singleView
+          ? onLeftChevronTap
+          : onLeftChevronYearTap,
       margin: headerStyle.leftChevronMargin,
       padding: headerStyle.leftChevronPadding,
     );
@@ -153,7 +159,9 @@ class CalendarHeader extends StatelessWidget {
   CustomIconButton rightChevronButton() {
     return CustomIconButton(
       icon: headerStyle.rightChevronIcon,
-      onTap: onRightChevronTap,
+      onTap: calendarHeaderView == CalendarHeaderView.singleView
+          ? onRightChevronTap
+          : onRightChevronYearTap,
       margin: headerStyle.rightChevronMargin,
       padding: headerStyle.rightChevronPadding,
     );
