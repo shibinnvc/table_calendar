@@ -453,6 +453,21 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
     );
   }
 
+  void _onLeftChevronYearTap() {
+    if (widget.onLeftChevronTap != null) {
+      widget.onLeftChevronTap!();
+    }
+    final nextPage = (_pageController.page ?? 0).toInt();
+    _pageController.animateToPage(
+        duration: Duration(milliseconds: 20),
+        curve: Curves.bounceIn,
+        nextPage - 11);
+    _pageController.previousPage(
+      duration: widget.pageAnimationDuration,
+      curve: widget.pageAnimationCurve,
+    );
+  }
+
   void _onRightChevronTap() {
     if (widget.onRightChevronTap != null) {
       widget.onRightChevronTap!();
@@ -463,24 +478,15 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
     );
   }
 
-  void _onLeftChevronYearTap() {
-    if (widget.onLeftChevronTap != null) {
-      widget.onLeftChevronTap!();
-    }
-    final nextPage = (_pageController.page ?? 0).toInt();
-    _pageController.jumpTo(nextPage - 11);
-    _pageController.previousPage(
-      duration: widget.pageAnimationDuration,
-      curve: widget.pageAnimationCurve,
-    );
-  }
-
   void _onRightChevronYearTap() {
     if (widget.onRightChevronTap != null) {
       widget.onRightChevronTap!();
     }
     final nextPage = (_pageController.page ?? 0).toInt();
-    _pageController.jumpTo(nextPage + 11);
+    _pageController.animateToPage(
+        duration: Duration(milliseconds: 20),
+        curve: Curves.bounceIn,
+        nextPage + 11);
     _pageController.nextPage(
       duration: widget.pageAnimationDuration,
       curve: widget.pageAnimationCurve,
