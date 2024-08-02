@@ -9,6 +9,8 @@ import '../shared/utils.dart' show CalendarFormat, DayBuilder;
 import 'custom_icon_button.dart';
 import 'format_button.dart';
 
+enum CalendarHeaderView { singleView, seperateMonthYearView }
+
 class CalendarHeader extends StatelessWidget {
   final dynamic locale;
   final DateTime focusedMonth;
@@ -21,6 +23,7 @@ class CalendarHeader extends StatelessWidget {
   final ValueChanged<CalendarFormat> onFormatButtonTap;
   final Map<CalendarFormat, String> availableCalendarFormats;
   final DayBuilder? headerTitleBuilder;
+  final CalendarHeaderView calendarHeaderView;
 
   const CalendarHeader({
     Key? key,
@@ -35,6 +38,7 @@ class CalendarHeader extends StatelessWidget {
     required this.onFormatButtonTap,
     required this.availableCalendarFormats,
     this.headerTitleBuilder,
+    this.calendarHeaderView = CalendarHeaderView.singleView,
   }) : super(key: key);
 
   @override
@@ -52,12 +56,7 @@ class CalendarHeader extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           if (!headerStyle.titleLeft && headerStyle.leftChevronVisible)
-            CustomIconButton(
-              icon: headerStyle.leftChevronIcon,
-              onTap: onLeftChevronTap,
-              margin: headerStyle.leftChevronMargin,
-              padding: headerStyle.leftChevronPadding,
-            ),
+            leftChevronButton(),
           if (headerStyle.isTitleExpanded)
             Expanded(
               child: headerTitleBuilder?.call(context, focusedMonth) ??
@@ -73,10 +72,12 @@ class CalendarHeader extends StatelessWidget {
                               text: '$month ',
                               style: headerStyle.monthTextStyle,
                             ),
-                            TextSpan(
-                              text: year,
-                              style: headerStyle.yearTextStyle,
-                            ),
+                            if (calendarHeaderView ==
+                                CalendarHeaderView.singleView)
+                              TextSpan(
+                                text: year,
+                                style: headerStyle.yearTextStyle,
+                              ),
                           ]))
                       // Text(
                       //   text,
@@ -100,10 +101,11 @@ class CalendarHeader extends StatelessWidget {
                         text: '$month ',
                         style: headerStyle.monthTextStyle,
                       ),
-                      TextSpan(
-                        text: year,
-                        style: headerStyle.yearTextStyle,
-                      ),
+                      if (calendarHeaderView == CalendarHeaderView.singleView)
+                        TextSpan(
+                          text: year,
+                          style: headerStyle.yearTextStyle,
+                        ),
                     ]))),
           if (headerStyle.formatButtonVisible &&
               availableCalendarFormats.length > 1)
@@ -120,21 +122,41 @@ class CalendarHeader extends StatelessWidget {
               ),
             ),
           if (headerStyle.titleLeft && headerStyle.leftChevronVisible)
-            CustomIconButton(
-              icon: headerStyle.leftChevronIcon,
-              onTap: onLeftChevronTap,
-              margin: headerStyle.leftChevronMargin,
-              padding: headerStyle.leftChevronPadding,
+            leftChevronButton(),
+          if (headerStyle.rightChevronVisible) rightChevronButton(),
+          if (calendarHeaderView ==
+              CalendarHeaderView.seperateMonthYearView) ...[
+            Spacer(),
+            leftChevronButton(),
+            Text(
+              year,
+              textAlign: headerStyle.titleCentered
+                  ? TextAlign.center
+                  : TextAlign.start,
+              style: headerStyle.yearTextStyle,
             ),
-          if (headerStyle.rightChevronVisible)
-            CustomIconButton(
-              icon: headerStyle.rightChevronIcon,
-              onTap: onRightChevronTap,
-              margin: headerStyle.rightChevronMargin,
-              padding: headerStyle.rightChevronPadding,
-            ),
+            rightChevronButton(),
+          ]
         ],
       ),
+    );
+  }
+
+  CustomIconButton leftChevronButton() {
+    return CustomIconButton(
+      icon: headerStyle.leftChevronIcon,
+      onTap: onLeftChevronTap,
+      margin: headerStyle.leftChevronMargin,
+      padding: headerStyle.leftChevronPadding,
+    );
+  }
+
+  CustomIconButton rightChevronButton() {
+    return CustomIconButton(
+      icon: headerStyle.rightChevronIcon,
+      onTap: onRightChevronTap,
+      margin: headerStyle.rightChevronMargin,
+      padding: headerStyle.rightChevronPadding,
     );
   }
 }
