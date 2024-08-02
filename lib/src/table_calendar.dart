@@ -213,6 +213,9 @@ class TableCalendar<T> extends StatefulWidget {
   //Customize controller
   final PageController? pageController;
 
+  //Customize header
+  final Widget? customHeader;
+
   /// Creates a `TableCalendar` widget.
   TableCalendar({
     Key? key,
@@ -272,6 +275,7 @@ class TableCalendar<T> extends StatefulWidget {
     this.onLeftChevronTap,
     this.onRightChevronTap,
     this.pageController,
+    this.customHeader,
   })  : assert(availableCalendarFormats.keys.contains(calendarFormat)),
         assert(availableCalendarFormats.length <= CalendarFormat.values.length),
         assert(weekendDays.isNotEmpty
@@ -490,6 +494,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
 
                   widget.onFormatChanged?.call(format);
                 },
+                customHeader: widget.customHeader,
               );
             },
           ),
