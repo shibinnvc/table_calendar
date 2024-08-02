@@ -210,6 +210,9 @@ class TableCalendar<T> extends StatefulWidget {
   //Customize function _onRighjtChevronTap
   final void Function()? onRightChevronTap;
 
+  //Customize calendar header view
+  final CalendarHeaderView calendarHeaderView;
+
   /// Creates a `TableCalendar` widget.
   TableCalendar({
     Key? key,
@@ -268,6 +271,7 @@ class TableCalendar<T> extends StatefulWidget {
     this.onCalendarCreated,
     this.onLeftChevronTap,
     this.onRightChevronTap,
+    this.calendarHeaderView = CalendarHeaderView.singleView,
   })  : assert(availableCalendarFormats.keys.contains(calendarFormat)),
         assert(availableCalendarFormats.length <= CalendarFormat.values.length),
         assert(weekendDays.isNotEmpty
@@ -440,7 +444,9 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
   }
 
   void _onLeftChevronTap() {
-    widget.onLeftChevronTap!();
+    if (widget.onLeftChevronTap != null) {
+      widget.onLeftChevronTap!();
+    }
     _pageController.previousPage(
       duration: widget.pageAnimationDuration,
       curve: widget.pageAnimationCurve,
@@ -448,7 +454,9 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
   }
 
   void _onRightChevronTap() {
-    widget.onRightChevronTap!();
+    if (widget.onRightChevronTap != null) {
+      widget.onRightChevronTap!();
+    }
     _pageController.nextPage(
       duration: widget.pageAnimationDuration,
       curve: widget.pageAnimationCurve,
@@ -483,6 +491,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
 
                   widget.onFormatChanged?.call(format);
                 },
+                calendarHeaderView: widget.calendarHeaderView,
               );
             },
           ),
