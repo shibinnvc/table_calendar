@@ -460,7 +460,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
     final nextPage = (_pageController.page ?? 0).toInt();
     _pageController.jumpToPage(nextPage - 11);
     _pageController.previousPage(
-      duration: widget.pageAnimationDuration,
+      duration: Duration(milliseconds: 20),
       curve: widget.pageAnimationCurve,
     );
   }
@@ -482,7 +482,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
     final nextPage = (_pageController.page ?? 0).toInt();
     _pageController.jumpToPage(nextPage + 11);
     _pageController.nextPage(
-      duration: widget.pageAnimationDuration,
+      duration: Duration(milliseconds: 20),
       curve: widget.pageAnimationCurve,
     );
   }
