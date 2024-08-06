@@ -445,7 +445,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
 
   void _onLeftChevronTap() {
     if (widget.onLeftChevronTap != null) {
-      widget.onLeftChevronTap!();
+      widget.onLeftChevronTap;
     }
     _pageController.previousPage(
       duration: widget.pageAnimationDuration,
@@ -455,7 +455,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
 
   void _onRightChevronTap() {
     if (widget.onRightChevronTap != null) {
-      widget.onRightChevronTap!();
+      widget.onRightChevronTap;
     }
     _pageController.nextPage(
       duration: widget.pageAnimationDuration,
