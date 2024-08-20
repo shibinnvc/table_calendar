@@ -467,8 +467,8 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
     // if (widget.onLeftChevronTap != null) {
     //   widget.onLeftChevronTap!();
     // }
-    final nextPage = (_pageController.page ?? 0).toInt();
-    _pageController.jumpToPage(nextPage - 11);
+    // final nextPage = (_pageController.page ?? 0).toInt();
+    // _pageController.jumpToPage(nextPage - 11);
     _pageController.previousPage(
       duration: widget.pageAnimationDuration,
       curve: widget.pageAnimationCurve,
