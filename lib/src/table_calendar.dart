@@ -381,7 +381,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
         }
       }
     } else {
-      widget.onDaySelected?.call(day.toLocal(), _focusedDay.value.toLocal());
+      widget.onDaySelected?.call(day, _focusedDay.value);
     }
   }
 
@@ -410,7 +410,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
           widget.onRangeSelected!(_firstSelectedDay, null, _focusedDay.value);
         } else {
           _firstSelectedDay = null;
-          widget.onDaySelected?.call(day.toLocal(), _focusedDay.value.toLocal());
+          widget.onDaySelected?.call(day, _focusedDay.value);
         }
       }
     }
