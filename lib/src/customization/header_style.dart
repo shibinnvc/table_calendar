@@ -29,6 +29,23 @@ class HeaderStyle {
 
   /// Style for title Text (month-year) displayed in header.
   final TextStyle titleTextStyle;
+  final TextFormatter? monthTextFormatter;
+
+  /// Use to customize header's title text (e.g. with different `DateFormat`).
+  /// You can use `String` transformations to further customize the text.
+  /// Defaults to simple `'yMMMM'` format (i.e. January 2019, February 2019, March 2019, etc.).
+  ///
+  /// Example usage:
+  /// ```dart
+  /// titleTextFormatter: (date, locale) => DateFormat.yM(locale).format(date),
+  /// ```
+  final TextFormatter? yearTextFormatter;
+
+  /// Style for title Text month displayed in header.
+  final TextStyle monthTextStyle;
+
+  /// Style for title Text year displayed in header.
+  final TextStyle yearTextStyle;
 
   /// Style for FormatButton `Text`.
   final TextStyle formatButtonTextStyle;
@@ -72,6 +89,12 @@ class HeaderStyle {
   /// Determines left chevron's visibility.
   final bool leftChevronVisible;
 
+  /// Align title to left and chevrons to right position.
+  final bool titleLeft;
+
+  /// Align title to left and chevrons to right position.
+  final bool isTitleExpanded;
+
   /// Determines right chevron's visibility.
   final bool rightChevronVisible;
 
@@ -80,11 +103,17 @@ class HeaderStyle {
 
   /// Creates a `HeaderStyle` used by `TableCalendar` widget.
   const HeaderStyle({
+    this.monthTextFormatter,
+    this.yearTextFormatter,
+    this.isTitleExpanded = false,
+    this.titleLeft = false,
     this.titleCentered = false,
     this.formatButtonVisible = true,
     this.formatButtonShowsNext = true,
     this.titleTextFormatter,
     this.titleTextStyle = const TextStyle(fontSize: 17.0),
+    this.monthTextStyle = const TextStyle(fontSize: 17.0),
+    this.yearTextStyle = const TextStyle(fontSize: 17.0),
     this.formatButtonTextStyle = const TextStyle(fontSize: 14.0),
     this.formatButtonDecoration = const BoxDecoration(
       border: Border.fromBorderSide(BorderSide()),
