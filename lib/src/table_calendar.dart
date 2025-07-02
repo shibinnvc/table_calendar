@@ -213,6 +213,15 @@ class TableCalendar<T> extends StatefulWidget {
   /// Called when the calendar is created. Exposes its PageController.
   final void Function(PageController pageController)? onCalendarCreated;
 
+  // //Customize function _onLeftChevronTap
+  // final void Function()? onLeftChevronTap;
+
+  // //Customize function _onRighjtChevronTap
+  // final void Function()? onRightChevronTap;
+
+  //Customize calendar header view
+  final CalendarHeaderView calendarHeaderView;
+
   /// Creates a `TableCalendar` widget.
   TableCalendar({
     super.key,
@@ -270,6 +279,9 @@ class TableCalendar<T> extends StatefulWidget {
     this.onPageChanged,
     this.onFormatChanged,
     this.onCalendarCreated,
+    // this.onLeftChevronTap,
+    // this.onRightChevronTap,
+    this.calendarHeaderView = CalendarHeaderView.singleView,
   })  : assert(availableCalendarFormats.keys.contains(calendarFormat)),
         assert(availableCalendarFormats.length <= CalendarFormat.values.length),
         assert(
@@ -450,6 +462,33 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
   }
 
   void _onRightChevronTap() {
+    // if (widget.onRightChevronTap != null) {
+    //   widget.onRightChevronTap!();
+    // }
+    _pageController.nextPage(
+      duration: widget.pageAnimationDuration,
+      curve: widget.pageAnimationCurve,
+    );
+  }
+
+  void _onLeftChevronYearTap() {
+    // if (widget.onLeftChevronTap != null) {
+    //   widget.onLeftChevronTap!();
+    // }
+    // final nextPage = (_pageController.page ?? 0).toInt();
+    // _pageController.jumpToPage(nextPage - 11);
+    _pageController.previousPage(
+      duration: widget.pageAnimationDuration,
+      curve: widget.pageAnimationCurve,
+    );
+  }
+
+  void _onRightChevronYearTap() {
+    // if (widget.onRightChevronTap != null) {
+    //   widget.onRightChevronTap!();
+    // }
+    final nextPage = (_pageController.page ?? 0).toInt();
+    _pageController.jumpToPage(nextPage + 11);
     _pageController.nextPage(
       duration: widget.pageAnimationDuration,
       curve: widget.pageAnimationCurve,
@@ -469,6 +508,8 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
                 focusedMonth: value,
                 onLeftChevronTap: _onLeftChevronTap,
                 onRightChevronTap: _onRightChevronTap,
+                onLeftChevronYearTap: _onLeftChevronYearTap,
+                onRightChevronYearTap: _onRightChevronYearTap,
                 onHeaderTap: () => widget.onHeaderTapped?.call(value),
                 onHeaderLongPress: () =>
                     widget.onHeaderLongPressed?.call(value),
@@ -484,6 +525,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
 
                   widget.onFormatChanged?.call(format);
                 },
+                calendarHeaderView: widget.calendarHeaderView,
               );
             },
           ),
