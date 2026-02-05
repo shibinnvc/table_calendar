@@ -54,7 +54,7 @@ class CellContent extends StatelessWidget {
     if (cell != null) {
       return Semantics(
         label: semanticsLabel,
-        excludeSemantics: true,
+        explicitChildNodes: true,
         child: cell,
       );
     }
@@ -169,7 +169,7 @@ class CellContent extends StatelessWidget {
 
     return Semantics(
       label: semanticsLabel,
-      excludeSemantics: true,
+      explicitChildNodes: true,
       child: cell,
     );
   }
